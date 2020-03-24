@@ -506,13 +506,24 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
   Widget _buildTable() {
     final daysInWeek = 7;
     final children = <TableRow>[
-      if (widget.calendarStyle.renderDaysOfWeek) _buildDaysOfWeek(),
     ];
+
+    if (widget.calendarStyle.renderDaysOfWeek &&
+        !widget.calendarStyle.bottomDaysOfWeek
+    ) {
+      children.add(_buildDaysOfWeek());
+    }
 
     int x = 0;
     while (x < widget.calendarController._visibleDays.value.length) {
       children.add(_buildTableRow(widget.calendarController._visibleDays.value.skip(x).take(daysInWeek).toList()));
       x += daysInWeek;
+    }
+
+    if (widget.calendarStyle.renderDaysOfWeek &&
+        widget.calendarStyle.bottomDaysOfWeek
+    ) {
+      children.add(_buildDaysOfWeek());
     }
 
     return Table(

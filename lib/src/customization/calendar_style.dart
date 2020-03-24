@@ -75,6 +75,8 @@ class CalendarStyle {
   /// Determines whether the row of days of the week should be rendered or not.
   final bool renderDaysOfWeek;
 
+  final bool bottomDaysOfWeek;
+
   /// Padding of `TableCalendar`'s content.
   final EdgeInsets contentPadding;
 
@@ -111,6 +113,7 @@ class CalendarStyle {
     this.outsideDaysVisible = true,
     this.renderSelectedFirst = true,
     this.renderDaysOfWeek = true,
+    this.bottomDaysOfWeek = false,
     this.contentPadding = const EdgeInsets.only(bottom: 4.0, left: 8.0, right: 8.0),
     this.canEventMarkersOverflow = false,
     this.highlightSelected = true,
