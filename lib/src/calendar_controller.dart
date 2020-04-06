@@ -100,7 +100,6 @@ class CalendarController {
     @required CalendarFormat initialFormat,
     @required Map<CalendarFormat, String> availableCalendarFormats,
     @required bool useNextCalendarFormat,
-    @required StartingDayOfWeek startingDayOfWeek,
     @required _SelectedDayCallback selectedDayCallback,
     @required OnVisibleDaysChanged onVisibleDaysChanged,
     @required OnCalendarCreated onCalendarCreated,
@@ -109,7 +108,6 @@ class CalendarController {
     _events = events;
     _holidays = holidays;
     _availableCalendarFormats = availableCalendarFormats;
-    _startingDayOfWeek = startingDayOfWeek;
     _useNextCalendarFormat = useNextCalendarFormat;
     _selectedDayCallback = selectedDayCallback;
     _includeInvisibleDays = includeInvisibleDays;
@@ -151,6 +149,10 @@ class CalendarController {
         _calendarFormat.value,
       );
     }
+  }
+
+  void setStartingDayOfWeek(StartingDayOfWeek startingDayOfWeek) {
+    _startingDayOfWeek = startingDayOfWeek;
   }
 
   /// Disposes the controller.

@@ -189,7 +189,7 @@ class TableCalendar extends StatefulWidget {
     this.enabledDayPredicate,
     this.rowHeight,
     this.formatAnimation = FormatAnimation.slide,
-    this.startingDayOfWeek = StartingDayOfWeek.sunday,
+    this.startingDayOfWeek,
     this.dayHitTestBehavior = HitTestBehavior.deferToChild,
     this.availableGestures = AvailableGestures.all,
     this.simpleSwipeConfig = const SimpleSwipeConfig(
@@ -225,7 +225,6 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
       initialFormat: widget.initialCalendarFormat,
       availableCalendarFormats: widget.availableCalendarFormats,
       useNextCalendarFormat: widget.headerStyle.formatButtonShowsNext,
-      startingDayOfWeek: widget.startingDayOfWeek,
       selectedDayCallback: _selectedDayCallback,
       onVisibleDaysChanged: widget.onVisibleDaysChanged,
       onCalendarCreated: widget.onCalendarCreated,
@@ -335,8 +334,27 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
     return widget.calendarController._getHolidayKey(day);
   }
 
+  static StartingDayOfWeek _startingDayOfWeek(int index) {
+    switch (index.remainder(7)) {
+      case 0: return StartingDayOfWeek.sunday;
+      case 1: return StartingDayOfWeek.monday;
+      case 2: return StartingDayOfWeek.tuesday;
+      case 3: return StartingDayOfWeek.wednesday;
+      case 4: return StartingDayOfWeek.thursday;
+      case 5: return StartingDayOfWeek.friday;
+      case 6: return StartingDayOfWeek.saturday;
+      default: return StartingDayOfWeek.sunday;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    widget.calendarController.setStartingDayOfWeek(
+        widget.startingDayOfWeek
+            ?? _startingDayOfWeek(
+            MaterialLocalizations.of(context)?.firstDayOfWeekIndex ?? 0
+        )
+    );
     return ClipRect(
       child: Column(
         mainAxisSize: MainAxisSize.min,
